@@ -56,18 +56,15 @@ _ test_example(int exit_code, cell data, tuple stack, cell actions, int gas) met
 
 [int, tuple, cell, tuple, int] test_get_total_data() method_id(2) {
     int function_selector = 128253; ;; funtion to run (128253 is get_total, check contract.fif)
-    tuple stack = unsafe_tuple([null()]); ;; stack for function
-
     cell data = begin_cell()             ;; initial data
         .store_uint(10, 64)               ;; counter
         .end_cell();
 
-    return [function_selector, stack, data, get_c7(), null()];
+    return [function_selector, unsafe_tuple([]), data, get_c7(), null()];
 }
 
 _ test_get_total(int exit_code, cell data, tuple stack, cell actions, int gas) method_id(3) {
     throw_if(103, exit_code != 0); ;; test need to be passed
-    int counter = first(stack); ;; get answer from get method
+    var counter = first(stack); ;; get answer from get method
     throw_if(104, counter != 10); ;; test if answer is 10 as we set
 }
-
